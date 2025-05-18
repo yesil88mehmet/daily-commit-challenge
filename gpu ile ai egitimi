@@ -1,0 +1,20 @@
+from ultralytics import YOLO
+import torch
+
+# GPU kullanılabilir mi kontrol et
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print("Kullanılan cihaz:", device)
+
+# Modeli yükle (önceden eğittiğin .pt dosyası varsa onu da koyabilirsin)
+model = YOLO('yolo11m.pt')  # veya 'yolov8m.pt' gibi başka bir model
+
+# Eğitim işlemi
+model.train(
+    data=r'C:\Users\mehme\OneDrive\Masaüstü\YOLO_11_BASKET\data.yaml',  # data.yaml yolu
+    epochs=100,
+    imgsz=640,
+    device=device,  # GPU kullanımı burada
+    name='basketball_custom_model',
+    batch=16,
+    workers=2  # GPU varsa çok da arttırmana gerek yok
+)
